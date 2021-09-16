@@ -34,14 +34,13 @@ public class GetGPS extends Service implements LocationListener {
     public GetGPS(Context ctx) {
         this.ctx = ctx;
         getLocation();
-        Toast.makeText(ctx, (checkPermission()?"Permitido":"Nao permitido"), Toast.LENGTH_SHORT).show();
-        //System.out.println((checkPermission()?"Permitido":"Não permitido"));
     }
 
     //Verifica se já foi dada permissão
     public boolean checkPermission(){
         if(!permission) {
             permission = (ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+            //getLocation();
         }
         return permission;
     }
@@ -55,28 +54,28 @@ public class GetGPS extends Service implements LocationListener {
             if (isGPSEnabed) {
                 if (location == null) {
                     if (checkPermission()) {
-                            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                            if(locationManager != null){
-                                location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                                if(location != null){
-                                    latitude = location.getLatitude();
-                                    longitude = location.getLongitude();
-                                }
+                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                        if(locationManager != null){
+                            location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                            if(location != null){
+                                latitude = location.getLatitude();
+                                longitude = location.getLongitude();
                             }
-                        }else{
-                            System.out.println("Permission NO");
                         }
+                    }else{
+                        Toast.makeText(ctx, "Você deve permitir o uso do GPS", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                System.out.println("GPS disabled");
+                }
+            }else{
+                Toast.makeText(ctx, "O GPS está desativado!", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return location;
     }
 
+    //Retorna a Latitude
     public double getLatitude(){
         if(location != null){
             latitude = location.getLatitude();
@@ -84,6 +83,7 @@ public class GetGPS extends Service implements LocationListener {
         return latitude;
     }
 
+    //Retorna a Longitude
     public double getLongitude(){
         if(location != null){
             longitude = location.getLongitude();
