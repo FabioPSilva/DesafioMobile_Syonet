@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         //Instancia a classe GetGPS passando o contexto
         getGPS = new GetGPS(MainActivity.this);
 
+
         //Ação do botão de Usar a localização atual
         butGetAtualLocation.setOnClickListener(new View.OnClickListener() {
             @Override
