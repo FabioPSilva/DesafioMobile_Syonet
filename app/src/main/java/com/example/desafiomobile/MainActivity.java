@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         EditText txtLongitude = findViewById(R.id.txtLongitude);
         Button butOpenMap = findViewById(R.id.buttonOpenMap);
         ImageButton butGetAtualLocation = findViewById(R.id.butGetAtualLocation);
-
         //Instancia a classe GetGPS passando o contexto
         getGPS = new GetGPS(MainActivity.this);
 
